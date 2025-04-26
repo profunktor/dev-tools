@@ -28,7 +28,7 @@
         };
       in
       {
-        devShell = pkgs.mkShell {
+        devShells.default = pkgs.mkShell {
           name = "profunktor-scala-dev-shell";
 
           buildInputs = with pkgs; [
