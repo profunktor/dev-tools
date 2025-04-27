@@ -8,8 +8,13 @@ on:
 
 jobs:
   build:
-    name: Checks
+    name: Build
     runs-on: ubuntu-latest
+
+    # the only supported system by coursier and sbt on nixpkgs
+    strategy:
+      matrix:
+        system: ['x86_64-linux']
 
     steps:
       - uses: actions/checkout@v4
@@ -27,3 +32,6 @@ jobs:
         run: |
           nix flake check --all-systems -L
           nix build .#sbt -L
+
+      - name: "Nix devshell build for ${{ matrix.system }} ❄️"
+        run: nix build .#devShells.${{ matrix.system }}.default.inputDerivation
